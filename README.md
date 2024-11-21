@@ -8,7 +8,7 @@ Novemeber 2024
 Felipe MENDEZ, Clara CHABRILLANGEAS, Benjamin RENARD, Jérôme LE COZ
 (INRAE, RiverLy and RECOVER). November 2024. Acknowledgement to Pascal
 MATTE (Enviroment Canada) and Daniel BOURGAULT (UQAR, Canada) for
-developing
+developing and sharing the code of
 [Qmec](https://codeocean.com/capsule/8881837/tree/v2),Bourgault and
 Matte (2022), as well as for their support and collaboration throughout
 this project.
