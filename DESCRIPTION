@@ -1,0 +1,26 @@
+Package: QmecBaM
+Title: Tools for estimating discharge time series with uncertainties at gauge stations influenced by tidal effects
+Version: 0.1.0
+Author: c(
+    person("Felipe", "Mendez", , "felipe-alberto.mendez-rios@inrae.fr", role = c("aut", "cre"),comment = c(ORCID = "0009-0004-0371-8699")),
+	person("Clara", "Chabrillangeas", email = "clara.chabrillangeas@engees.fr",role = c("aut","cre"),
+    person("Benjamin", "Renard", email = "benjamin.renard@inrae.fr",role = c("aut"),
+			comment = c(ORCID = "0000-0001-8447-5430")),
+    person("Jerome", "Le Coz", email = "jerome.lecoz@inrae.fr",role = c("aut"),
+			comment = c(ORCID = "0000-0003-1243-6955")),
+	person("INRAE", role = c("fnd")),
+    person("Ministère de la Transition Ecologique - SCHAPI", role = c("fnd"))))
+Maintainer: <felipe-alberto.mendez-rios@inrae.fr>
+Description: Qmec is a physically based, fully nonlinear, and nonstead reach-averaged river model 
+	to provide instantaneous freshwater discharge rates in tidal rivers using water level measurements 
+	alone at two tide gauge stations. 
+	This model was developed by Bourgault, D., & Matte P. (2021) <https://doi.org/10.1029/2019JC015992>,
+	and its main code is published here: <https://codeocean.com/capsule/8881837/tree/v2>.
+	This version is enhanced by the incorporation of associated uncertainties during calibration and simulation,
+	achieved using Bayesian estimation, as practically applied by BaM!
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Depends: 
+    R (>= 3.5.0)

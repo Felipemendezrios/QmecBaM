@@ -1,0 +1,40 @@
+---
+title: "Qmec BaM"
+author: "Felipe MENDEZ (INRAE, RiverLy)"
+date: "Novemeber 2024"
+output:
+  github_document:
+subtitle: Documentation
+bibliography: inst/QmecBaM_package.bib
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  warning = FALSE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# Acknowledgement
+Felipe MENDEZ, Clara CHABRILLANGEAS, Benjamin RENARD, Jérôme LE COZ (INRAE, RiverLy and RECOVER). November 2024. Acknowledgement to Pascal MATTE (Enviroment Canada) and  Daniel BOURGAULT (UQAR, Canada) for developing and sharing the code of [Qmec](https://codeocean.com/capsule/8881837/tree/v2),@bourgaultQmecMatlabCode2022, as well as for their support and collaboration throughout this project.
+
+# Introduction
+[Qmec](https://doi.org/10.1029/2019JC015992) is a physically based, fully nonlinear, and nonstead reach-averaged river model to provide instantaneous freshwater discharge rates in tidal rivers using water level measurements alone at two tide gauge stations developed by @bourgaultPhysicallyBasedMethod2020. 
+
+The goal of `QmecBaM` is to incorporate the associated uncertainties during the calibration and simulation of discharge time series for a tidal river, achieved using Bayesian estimation. To achieve this, the package [BaM!](https://github.com/BaM-tools/BaM) will be applied.
+
+## Installation
+
+You can install the development version of [QmecBaM](https://github.com/Felipemendezrios/QmecBaM) from GitHub using the following command. Please note that the [RBaM](https://github.com/BaM-tools/RBaM) package developed by [@renardBaMBayesianModeling2017](https://hal.inrae.fr/hal-02606929) is also required to run this package.
+
+``` {r  results='hide',message=FALSE}
+# Before first use, install RatingShiftHappens and RBaM packages ones and for all, following these commands: 
+
+# devtools::install_github("Felipemendezrios/QmecBaM")
+# devtools::install_github('BaM-tools/RBaM') 
+
+library(QmecBaM)
+```
