@@ -7,27 +7,27 @@ dir.calibration=file.path(getwd(),'data-raw','Saint_Laurent')
 # Read the stage record of the two stations:
 
 # Lauzon gauge station  (downstream):
-h_Lauzon=read.table(file.path(dir.calibration,
-                              'water_level_1962_2019',
-                              'h_Lauzon',
-                              '3250-01-JAN-2000_slev.csv'),
-           skip=8, sep=';')
+h_Lauzon=data.frame(data.table::fread(file.path(dir.calibration,
+                                                'water_level_1962_2019',
+                                                'h_Lauzon',
+                                                '3250-01-JAN-2000_slev.csv'),
+                                      skip=8))
 
 colnames(h_Lauzon) <- c('year','month','day','hour','minute','h')
 
 # Neuville gauge station (upstream):
-h_Neuville=read.table(file.path(dir.calibration,
-                                'water_level_1962_2019',
-                                'h_Neuville',
-                                '3280-01-JAN-2000_slev.csv'),
-                      skip=8, sep=';')
+h_Neuville=data.frame(data.table::fread(file.path(dir.calibration,
+                                                  'water_level_1962_2019',
+                                                  'h_Neuville',
+                                                  '3280-01-JAN-2000_slev.csv'),
+                                        skip=8))
 
 colnames(h_Neuville) <- c('year','month','day','hour','minute','h')
 
 # Initial date to capture the tide
 date.start <- data.frame('year'=2009,
                          'month'=8,
-                         'day'=16,
+                         'day'=20,
                          'hour'=0,
                          'minute'=0,
                          'second'=0)
@@ -35,7 +35,7 @@ date.start <- data.frame('year'=2009,
 # Final date to capture the tide
 date.end <- data.frame('year'=2009,
                        'month'=8,
-                       'day'=26,
+                       'day'=22,
                        'hour'=0,
                        'minute'=0,
                        'second'=0)
