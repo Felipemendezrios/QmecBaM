@@ -101,10 +101,10 @@ Estimation_Qmec <- function(CalibrationData,
                             nSlim=max(nCycles/10, 1),
                             temp.folder = file.path(tempdir(), "BaM")){
 
-  D=RBaM::dataset(X=CalibrationData[c('h1','h2')],
-                  Y=CalibrationData[c('Q')],
-                  Yu=CalibrationData[c('u_Q')],
-                  data.dir = temp.folder)
+  CalData.object=RBaM::dataset(X=CalibrationData[c('h1','h2')],
+                        Y=CalibrationData[c('Q')],
+                        Yu=CalibrationData[c('u_Q')],
+                        data.dir = temp.folder)
 
   # Prior information
   c=RBaM::parameter(name='c',init=4/3,prior.dist='FIX')
@@ -125,9 +125,9 @@ Estimation_Qmec <- function(CalibrationData,
                     dx.object,
                     dt)
   # Model
-  M=RBaM::model(ID='SFDTidal_Qmec2',
-                nX=2,nY=1, # number of input/output variables
-                par=param_list)
+  Model.object=RBaM::model(ID='SFDTidal_Qmec2',
+                           nX=2,nY=1, # number of input/output variables
+                           par=param_list)
 
   # Remnant error
   remnant=RBaM::remnantErrorModel(funk='Constant',
@@ -141,8 +141,8 @@ Estimation_Qmec <- function(CalibrationData,
   cook_temp=RBaM::mcmcCooking(burn=burn,nSlim=nSlim)
 
   # Run BaM executable
-  RBaM::BaM(mod=M,
-            data=D,
+  RBaM::BaM(mod=Model.object,
+            data=CalData.object,
             workspace=temp.folder,
             doCalib=TRUE,
             doPred=FALSE,
@@ -185,7 +185,84 @@ Estimation_Qmec <- function(CalibrationData,
   }
 
   return(list(MCMC=MCMC,
-              prior_vs_posterior=prior_vs_posterior))
+              prior_vs_posterior=prior_vs_posterior,
+              CalData.object=CalData.object,
+              Model.object=Model.object))
 
 }
 
+#' Discharge simulation with uncertainties
+#'
+#' @param CalData.object object, calibration object obtained from `RBaM` package
+#' @param temp.folder directory, temporary directory to write computations
+#' @param DoParam_Unc logical, if `TRUE` propagate parametric uncertainty
+#' @param DoTotal_Unc logical, if `TRUE` propagate total uncertainty
+#'
+#' @return ggplots, discharge simulation with uncertainties
+#' @importFrom RBaM dataset parameter
+#' @export
+Prediction_Q_Qmec <- function(CalData.object,
+                              temp.folder = file.path(tempdir(), "BaM"),
+                              DoParam_Unc=TRUE,
+                              DoTotal_Unc=TRUE){
+
+  # Define a 'prediction' object with no uncertainty - this corresponds to the 'maxpost' discharge maximizing the posterior
+  maxpost=RBaM::prediction(X=CalData.object$data[c('h1','h2')],
+                           spagFiles='maxpost.spag',
+                           data.dir=temp.folder,
+                           doParametric=FALSE,doStructural=FALSE,
+                           spagFiles_state =c('pressuremax.spag','frictionmax.spag','advectionmax.spag'),
+                           transposeSpag_state = TRUE,
+                           envFiles_state = c('pressuremax.env','frictionmax.env','advectionmax.env'))
+
+  pred_list=list(maxpost)
+  inx=1 # track if more than one prediction experiment was defined
+
+  if(DoParam_Unc){
+    inx=inx+1
+    # Define a 'prediction' object for parametric uncertainty only - not the doStructural=FALSE
+    paramU=RBaM::prediction(X=CalData.object$data[c('h1','h2')],
+                            spagFiles='paramU.spag',
+                            data.dir=temp.folder,
+                            doParametric=TRUE,doStructural=FALSE,
+                            spagFiles_state =c('pressureparam.spag','frictionparam.spag','advectionparam.spag'),
+                            transposeSpag_state = TRUE,
+                            envFiles_state = c('pressureparam.env','frictionparam.env','advectionparam.env'))
+
+    pred_list[[inx]]=paramU
+  }
+
+  if(DoTotal_Unc){
+    inx=inx+1
+    # Define a 'prediction' object for total predictive uncertainty
+    totalU=RBaM::prediction(X=CalData.object$data[c('h1','h2')], # stage values
+                            spagFiles='totalU.spag', # file where predictions are saved
+                            data.dir=temp.folder, # a copy of data files will be saved here
+                            doParametric=TRUE, # propagate parametric uncertainty, i.e. MCMC samples?
+                            doStructural=TRUE,
+                            spagFiles_state =c('pressuretot.spag','frictiontot.spag','advectiontot.spag'),
+                            transposeSpag_state = TRUE,
+                            envFiles_state = c('pressuretot.env','frictiontot.env','advectiontot.env')) # propagate structural uncertainty ?
+
+    pred_list[[inx]]=totalU
+  }
+
+  # Remnant error
+  remnant=RBaM::remnantErrorModel(funk='Constant',
+                                  par=list(RBaM::parameter(name='gamma1',
+                                                           init=1000,
+                                                           prior.dist='Uniform',
+                                                           prior.par=c(0,10000))))
+  #Re-run BaM, but in prediction mode
+  RBaM::BaM(mod=Model.object,
+            data=CalData.object,
+            remnant=list(remnant),
+            workspace=temp.folder,
+            pred=pred_list, # list of predictions
+            doCalib=FALSE,
+            doPred=TRUE) # Do not re-calibrate but do predictions
+
+
+
+
+}
