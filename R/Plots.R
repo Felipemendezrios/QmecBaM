@@ -70,7 +70,8 @@ plot_Q_sim_Qmec <- function(Q_observed,
     geom_point(data=Q_observed,
                aes(x=date,
                    y=Q,
-                   color='Gaugings'))
+                   color='Gaugings'),
+               size=1)
 
   plot_Q=plot_Q+
     labs(x='Time',y='Discharge (m3/s)')+
@@ -146,7 +147,8 @@ plot_shallow_water <- function(pressure_SW,
            x='Time',
            y='Discharge (m3/s)')+
       theme(legend.title = element_text(hjust=0.5,size=12),
-            plot.title = element_text(hjust=0.5,size=12))
+            plot.title = element_text(hjust=0.5,size=12))+
+      theme_bw()
 
     return(plot_SW)
 
@@ -157,28 +159,28 @@ plot_shallow_water <- function(pressure_SW,
 
       plot_SW[[i]]<-local({
 
-          if(names(pressure_SW)[i] == 'MaxPost'){ # Plot MaxPost simulation
-            ggplot()+
-              geom_line(data=pressure_SW$MaxPost,
-                        aes(x=date,
-                            y=V1,
-                            color=factor(id)),
-                        linewidth=1)+
-              geom_line(data=friction_SW$MaxPost,
-                        aes(x=date,
-                            y=V1,
-                            color=factor(id)),
-                        linewidth=1)+
-              geom_line(data=advection_SW$MaxPost,
-                        aes(x=date,
-                            y=V1,
-                            color=factor(id)),
-                        linewidth=1)+
-              scale_color_manual(name='1D Shallow Water \ncomponents',
-                                 values=c('MaxPostPressure'='blue',
-                                          'MaxPostFriction'='green',
-                                          'MaxPostAdvection'='red',
-                                          'Sum'='purple'),
+        if(names(pressure_SW)[i] == 'MaxPost'){ # Plot MaxPost simulation
+          ggplot()+
+            geom_line(data=pressure_SW$MaxPost,
+                      aes(x=date,
+                          y=V1,
+                          color=factor(id)),
+                      linewidth=1)+
+            geom_line(data=friction_SW$MaxPost,
+                      aes(x=date,
+                          y=V1,
+                          color=factor(id)),
+                      linewidth=1)+
+            geom_line(data=advection_SW$MaxPost,
+                      aes(x=date,
+                          y=V1,
+                          color=factor(id)),
+                      linewidth=1)+
+            scale_color_manual(name='1D Shallow Water \ncomponents',
+                               values=c('MaxPostPressure'='blue',
+                                        'MaxPostFriction'='green',
+                                        'MaxPostAdvection'='red',
+                                        'Sum'='purple'),
                                  labels=c('Pressure',
                                           'Friction',
                                           'Advection',
@@ -187,7 +189,8 @@ plot_shallow_water <- function(pressure_SW,
                    x='Time',
                    y='Discharge (m3/s)')+
               theme(legend.title = element_text(hjust=0.5,size=12),
-                    plot.title = element_text(hjust=0.5,size=12))
+                    plot.title = element_text(hjust=0.5,size=12))+
+            theme_bw()
 
           }else{
 
@@ -242,19 +245,20 @@ plot_shallow_water <- function(pressure_SW,
                               fill=factor(id)),
                           alpha=0.5)+
               scale_fill_manual(name='1D Shallow Water \ncomponents',
-                                 values=values_color,
-                                 labels=c('Pressure',
-                                          'Friction',
-                                          'Advection',
-                                          'Sum'))+
+                                values=values_color,
+                                labels=c('Pressure',
+                                         'Friction',
+                                         'Advection',
+                                         'Sum'))+
               labs(title = title_customized,
                    x='Time',
                    y='Discharge (m3/s)')+
-              theme_bw()+
               theme(legend.title = element_text(hjust=0.5,size=12),
-                    plot.title = element_text(hjust=0.5,size=12))
+                    plot.title = element_text(hjust=0.5,size=12))+
+              theme_bw()
           }
-    })
+      })
+      names(plot_SW)[[i]]=names(pressure_SW)[i]
     }
   }
   return(plot_SW)
