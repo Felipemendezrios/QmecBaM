@@ -1,0 +1,23 @@
+Information sur les distances entres certaines stations (Piney, 2015)
+
+LRnHv = 297650-243700;                                              
+LHvAz = 323400-297650;                                              
+LMnHv = 297650-285980;                                              
+LHvCd = 310500-297650;                                              
+% distance between Heurteauville and Rouen, Aizier and Heurteauville
+% distance between Heurteauville and Mesnil, Aizier and Caudebec   
+
+ 
+Information sur le CD: https://observatoire-estuaire.seine-aval.fr/cartographie/thematique/6/motcle/37 
+
+Le référentiel altimétrique utilisé est le CMH ou côte marine du Havre. 
+Il est situé 4,38m sous le système NGF (côte CMH = côte NGF + 4.38). 
+Il se réfère au niveau des plus basses mers astronomiques au Havre.
+
+Vu que toutes les mesures de hauteur d'eau sont référenciées au CMH, 
+pas besoin de faire la translation. On va travailler tout en CMH. d1 et d2 =0. 
+
+Pour l'information du fond du lit à l'amont et l'aval, je te propose de regarder la bathymétrie. 
+
+
+

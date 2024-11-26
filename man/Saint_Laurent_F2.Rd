@@ -19,7 +19,7 @@ of the Saint-Laurent river at Lauzon and Neuville}
 \item{h2}{real value, stage record downstram, at Lauzon}
 \item{u.h2}{Uncertainty of the stage downstream expressed as standard deviation}
 \item{Q}{Discharge ADCP measurement}
-\item{uQ}{Uncertainty of the discharge expressed as standard deviation}
+\item{u_Q}{Uncertainty of the discharge expressed as standard deviation}
 }
 }
 \source{
@@ -30,7 +30,7 @@ Saint_Laurent_F2
 }
 \description{
 A data frame containing information about the stage record in meters,
-referenced to the sea mean level (SML) from 16/06/2009 until 26/08/2009
+referenced to the zero of the stage gauge from 20/08/2009 until 22/08/2009
 provided by Pascal, Matte and Bourgault Daniel.
 Additionally, information on ADCP discharge measurements is available
 from the gauging campaign conducted on 21/08/2009

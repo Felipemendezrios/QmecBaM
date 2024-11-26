@@ -181,63 +181,63 @@ plot_shallow_water <- function(pressure_SW,
                                         'MaxPostFriction'='green',
                                         'MaxPostAdvection'='red',
                                         'Sum'='purple'),
-                                 labels=c('Pressure',
-                                          'Friction',
-                                          'Advection',
-                                          'Sum'))+
-              labs(title = 'Maximum posterior estimation',
-                   x='Time',
-                   y='Discharge (m3/s)')+
-              theme(legend.title = element_text(hjust=0.5,size=12),
-                    plot.title = element_text(hjust=0.5,size=12))+
+                               labels=c('Pressure',
+                                        'Friction',
+                                        'Advection',
+                                        'Sum'))+
+            labs(title = 'Maximum posterior estimation',
+                 x='Time',
+                 y='Discharge (m3/s)')+
+            theme(legend.title = element_text(hjust=0.5,size=12),
+                  plot.title = element_text(hjust=0.5,size=12))+
             theme_bw()
 
+        }else{
+
+          combined_SW [[i]] = data.frame(date=pressure_SW[[i]]$date,
+                                         min=c(pressure_SW[[i]]$q2.5 +
+                                                 friction_SW[[i]]$q2.5 +
+                                                 advection_SW[[i]]$q2.5),
+                                         max=c(pressure_SW[[i]]$q97.5 +
+                                                 friction_SW[[i]]$q97.5 +
+                                                 advection_SW[[i]]$q97.5),
+                                         id='Sum')
+
+          if(names(pressure_SW)[i] == 'TotalU'){
+            values_color=c('totalPressure'='blue',
+                           'totalFriction'='green',
+                           'totalAdvection'='red',
+                           'Sum'='purple')
+
+            title_customized = 'Total uncertainty'
           }else{
+            values_color=c('paramPressure'='blue',
+                           'paramFriction'='green',
+                           'paramAdvection'='red',
+                           'Sum'='purple')
 
-            combined_SW [[i]] = data.frame(date=pressure_SW[[i]]$date,
-                                           min=c(pressure_SW[[i]]$q2.5 +
-                                                   friction_SW[[i]]$q2.5 +
-                                                   advection_SW[[i]]$q2.5),
-                                           max=c(pressure_SW[[i]]$q97.5 +
-                                                   friction_SW[[i]]$q97.5 +
-                                                   advection_SW[[i]]$q97.5),
-                                           id='Sum')
+            title_customized = 'Parametric uncertainty'
+          }
 
-            if(names(pressure_SW)[i] == 'TotalU'){
-              values_color=c('totalPressure'='blue',
-                             'totalFriction'='green',
-                             'totalAdvection'='red',
-                             'Sum'='purple')
-
-              title_customized = 'Total uncertainty'
-            }else{
-              values_color=c('paramPressure'='blue',
-                             'paramFriction'='green',
-                             'paramAdvection'='red',
-                             'Sum'='purple')
-
-              title_customized = 'Parametric uncertainty'
-            }
-
-            ggplot()+
-              geom_ribbon(data=pressure_SW[[i]],
-                          aes(x=date,
-                              ymin=q2.5,
-                              ymax=q97.5,
-                              fill=factor(id)),
-                          alpha=0.5)+
-              geom_ribbon(data=friction_SW[[i]],
-                          aes(x=date,
-                              ymin=q2.5,
-                              ymax=q97.5,
-                              fill=factor(id)),
-                          alpha=0.5)+
-              geom_ribbon(data=advection_SW[[i]],
-                          aes(x=date,
-                              ymin=q2.5,
-                              ymax=q97.5,
-                              fill=factor(id)),
-                          alpha=0.5)+
+          ggplot()+
+            geom_ribbon(data=pressure_SW[[i]],
+                        aes(x=date,
+                            ymin=q2.5,
+                            ymax=q97.5,
+                            fill=factor(id)),
+                        alpha=0.5)+
+            geom_ribbon(data=friction_SW[[i]],
+                        aes(x=date,
+                            ymin=q2.5,
+                            ymax=q97.5,
+                            fill=factor(id)),
+                        alpha=0.5)+
+            geom_ribbon(data=advection_SW[[i]],
+                        aes(x=date,
+                            ymin=q2.5,
+                            ymax=q97.5,
+                            fill=factor(id)),
+                        alpha=0.5)+
               geom_ribbon(data=combined_SW[[i]],
                           aes(x=date,
                               ymin=min,
