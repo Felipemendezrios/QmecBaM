@@ -4,18 +4,13 @@
 \alias{Plot_prior_posterior}
 \title{Plot prior vs posterior distribution}
 \usage{
-Plot_prior_posterior(MCMC_results, DF_prior_posterior)
+Plot_prior_posterior(DF_prior_posterior)
 }
 \arguments{
-\item{MCMC_results}{data frame, MCMC cooking results}
-
 \item{DF_prior_posterior}{data frame, results of \code{Estimation} function givin prior vs posterior information}
 }
 \value{
-ggplot, list with the following information :
-\enumerate{
-\item histogram of prior vs posterior distribution
-}
+ggplot,  histogram of prior vs posterior distribution
 }
 \description{
 Plot leading to compare conflict or problems on the calibration

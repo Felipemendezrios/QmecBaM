@@ -6,35 +6,35 @@
 \usage{
 Estimation_Qmec(
   CalibrationData,
-  Be.object,
-  be.object,
-  delta.object,
-  ne.object,
-  Q0.object,
-  dx.object,
+  Be_object,
+  be_object,
+  delta_object,
+  ne_object,
+  Q0_object,
+  dx_object,
   CD1,
   CD2,
   dt_model,
   nCycles = 100,
   burn = 0.5,
   nSlim = max(nCycles/10, 1),
-  temp.folder = file.path(tempdir(), "BaM")
+  temp_folder = file.path(tempdir(), "BaM")
 )
 }
 \arguments{
 \item{CalibrationData}{data frame, calibration data with a minimal information as shown in \code{Saint_Laurent_F2} dataset}
 
-\item{Be.object}{object, real positive value indicating the cross-sectional width at the surface for hypothetical channel}
+\item{Be_object}{object, real positive value indicating the cross-sectional width at the surface for hypothetical channel}
 
-\item{be.object}{object, real positive value indicating the elevation of the riverbed relative to a reference system (sea mean level)}
+\item{be_object}{object, real positive value indicating the elevation of the riverbed relative to a reference system (sea mean level)}
 
-\item{delta.object}{object,real value indicating leveling error}
+\item{delta_object}{object,real value indicating leveling error}
 
-\item{ne.object}{object, real positive value indicating the tunable Manning friction coefficient}
+\item{ne_object}{object, real positive value indicating the tunable Manning friction coefficient}
 
-\item{Q0.object}{object, real value indicating initial discharge for calibration}
+\item{Q0_object}{object, real value indicating initial discharge for calibration}
 
-\item{dx.object}{object, real positive value indicating distance between two gauge stations}
+\item{dx_object}{object, real positive value indicating distance between two gauge stations}
 
 \item{CD1}{real value, chart-datum located upstream}
 
@@ -48,10 +48,20 @@ Estimation_Qmec(
 
 \item{nSlim}{integer, MCMC slim step}
 
-\item{temp.folder}{directory, temporary directory to write computations}
+\item{temp_folder}{directory, temporary directory to write computations}
 }
 \value{
 list with the following components:
+\enumerate{
+\item MCMC: data frame, MCMC results during calibration process
+\item prior_vs_posterior: data frame, summarize the random realization of all parameters
+\itemize{
+\item value: real value, random value during the random realization of the parameter
+\item Distributions: string, either "Prior" or "Posterior" string to indicate the separation of the two groups
+\item id: string, parameter's names
+}
+\item Model_object: object, model object obtained from \code{RBaM} package
+}
 }
 \description{
 Parameter estimation for the 1D shallow water equation and simulation of
@@ -65,7 +75,6 @@ priors=data.frame(Be=c(1500,'LogNormal',log(1500),0.1),
                   ne=c(0.023,'LogNormal',log(0.023),0.2),
                   Q0=c(12500,'Gaussian',12500,10000),
                   dx=c(38000,'Gaussian',38000,1000))
-
 
 Be=RBaM::parameter(name='Be',
                    init=as.numeric(priors$Be[1]),
@@ -102,17 +111,27 @@ d2= -1.958
 dt_model= 60
 
 results_calibration=Estimation_Qmec(CalibrationData=Saint_Laurent_F2,
-                                    Be.object=Be,
-                                    be.object=be,
-                                    delta.object=delta,
-                                    ne.object=ne,
-                                    Q0.object=Q0,
-                                    dx.object=dx,
+                                    Be_object=Be,
+                                    be_object=be,
+                                    delta_object=delta,
+                                    ne_object=ne,
+                                    Q0_object=Q0,
+                                    dx_object=dx,
                                     CD1=d1,
                                     CD2=d2,
-                                    nCycles = 10,
+                                    nCycles = 100,
                                     burn=0.5,
                                     dt_model=dt_model)
 
 Plot_prior_posterior(DF_prior_posterior=results_calibration$prior_vs_posterior)
+
+simulation_QMEC=Prediction_Q_Qmec(CalibrationData=Saint_Laurent_F2,
+                                  Model_object=results_calibration$Model_object)
+
+plot_Q_sim_Qmec(Q_observed=simulation_QMEC$Data_obs_plot,
+                Q_simulated=simulation_QMEC$Qsim)
+
+plot_shallow_water(pressure_SW=simulation_QMEC$pressure,
+                   friction_SW=simulation_QMEC$friction,
+                   advection_SW=simulation_QMEC$advection)
 }

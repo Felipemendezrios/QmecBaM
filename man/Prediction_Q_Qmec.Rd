@@ -5,24 +5,61 @@
 \title{Discharge simulation with uncertainties}
 \usage{
 Prediction_Q_Qmec(
-  CalData.object,
-  temp.folder = file.path(tempdir(), "BaM"),
+  CalibrationData,
+  Model_object,
+  temp_folder = file.path(tempdir(), "BaM"),
   DoParam_Unc = TRUE,
   DoTotal_Unc = TRUE
 )
 }
 \arguments{
-\item{CalData.object}{object, calibration object obtained from \code{RBaM} package}
+\item{CalibrationData}{data frame, calibration data with a minimal information as shown in \code{Saint_Laurent_F2} dataset}
 
-\item{temp.folder}{directory, temporary directory to write computations}
+\item{Model_object}{object, model object obtained from \code{Estimation_Qmec} function}
+
+\item{temp_folder}{directory, temporary directory to write computations (see \code{details})}
 
 \item{DoParam_Unc}{logical, if \code{TRUE} propagate parametric uncertainty}
 
 \item{DoTotal_Unc}{logical, if \code{TRUE} propagate total uncertainty}
 }
 \value{
-ggplots, discharge simulation with uncertainties
+list of following components:
+\enumerate{
+\item Data_obs_plot: data frame, observed data
+\item Qsim: list, discharge simulation with their uncertainties
+\itemize{
+\item TotalU: data frame, total uncertainty on discharge simulation
+\item ParamU: data frame, parametric uncertainty on discharge simulation
+\item MaxPost: data frame, discharge simulation following maximum posterior estimation
+}
+\item pressure: list, pressure component of the 1D shallow water equation
+\itemize{
+\item TotalU: data frame, total uncertainty on pressure simulation
+\item ParamU: data frame, parametric uncertainty on pressure simulation
+\item MaxPost: data frame, pressure simulation following maximum posterior estimation
+}
+\item friction: list, friction component of the 1D shallow water equation
+\itemize{
+\item TotalU: data frame, total uncertainty on friction simulation
+\item ParamU: data frame, parametric uncertainty on friction simulation
+\item MaxPost: data frame, friction simulation following maximum posterior estimation
+}
+\item advection: list, advection component of the 1D shallow water equation
+\itemize{
+\item TotalU: data frame, total uncertainty on advection simulation
+\item ParamU: data frame, parametric uncertainty on advection simulation
+\item MaxPost: data frame, advection simulation following maximum posterior estimation
+}
+}
 }
 \description{
 Discharge simulation with uncertainties
+}
+\details{
+Please ensure that the temp_folder is the same as the one used in \code{Estimation_Qmec} function.
+Otherwise, an error message will appear
+
+Please enter the same CalibrationData as used during calibration. Dataset must have a column
+called "date" in date-time format (mandatory). Otherwise, an error message will appear
 }
