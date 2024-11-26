@@ -74,7 +74,7 @@ the model, as shown below:
    # effective friction coefficient
    ne=c(0.023,
         'LogNormal',
-        log(0.023),1.5),
+        log(0.023),0.15),
    # Initial discharge 
    Q0=c(12500,
         'Gaussian',
@@ -167,7 +167,7 @@ Plot_prior_posterior(DF_prior_posterior=results_calibration$prior_vs_posterior)
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
-The MODEL PARAMETERS have been estimated so far. Let’s simulate the
+The model parameters have been estimated so far. Let’s simulate the
 discharge time series.
 
 ``` r
@@ -263,7 +263,7 @@ knowledge is specified here:
    # constant effective width of the rectangular channel
    Be=c(150, # initial guess
         'LogNormal', # distribution
-        log(150),0.15), # parameters of the distribution 
+        log(150),0.3), # parameters of the distribution 
    # River bed elevation relative to a reference system
    be=c(-5,
         'Gaussian',
@@ -424,8 +424,8 @@ input_stage_plot_LS=ggplot(Lower_Seine_Rouen,aes(x=date))+
   geom_line(aes(y=h1,col='Upstream'))+
   geom_line(aes(y=h2,col='Downstream'))+
   labs(x='Time',
-                y='Stage [m]',
-                col='Gauge station')+
+       y='Stage [m]',
+       col='Gauge station')+
   theme_bw()
 
 input_stage_plot_LS+

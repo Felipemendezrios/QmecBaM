@@ -64,7 +64,7 @@ In this example, the reach concerned covers the section between Neuville and Lau
    # effective friction coefficient
    ne=c(0.023,
         'LogNormal',
-        log(0.023),1.5),
+        log(0.023),0.15),
    # Initial discharge 
    Q0=c(12500,
         'Gaussian',
@@ -213,7 +213,7 @@ It was decided to test the tool on the section extending from the gauge station 
    # constant effective width of the rectangular channel
    Be=c(150, # initial guess
         'LogNormal', # distribution
-        log(150),0.15), # parameters of the distribution 
+        log(150),0.3), # parameters of the distribution 
    # River bed elevation relative to a reference system
    be=c(-5,
         'Gaussian',
