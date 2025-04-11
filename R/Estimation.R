@@ -465,7 +465,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
       read.table(
         file.path(
           temp_folder,
-          "pressureparam.env"
+          "pressureParam.env"
         ),
         header = T
       ),
@@ -476,7 +476,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
       read.table(
         file.path(
           temp_folder,
-          "frictionparam.env"
+          "frictionParam.env"
         ),
         header = T
       ),
@@ -487,7 +487,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
       read.table(
         file.path(
           temp_folder,
-          "advectionparam.env"
+          "advectionParam.env"
         ),
         header = T
       ),
@@ -517,7 +517,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
   pressure_MaxPost <- data.frame(date_indx,
     read.table(file.path(
       temp_folder,
-      "pressuremax.spag"
+      "pressureMax.spag"
     )),
     id = "MaxPostPressure"
   )
@@ -525,7 +525,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
   friction_MaxPost <- data.frame(date_indx,
     read.table(file.path(
       temp_folder,
-      "frictionmax.spag"
+      "frictionMax.spag"
     )),
     id = "MaxPostFriction"
   )
@@ -533,7 +533,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
   advection_MaxPost <- data.frame(date_indx,
     read.table(file.path(
       temp_folder,
-      "advectionmax.spag"
+      "advectionMax.spag"
     )),
     id = "MaxPostAdvection"
   )
