@@ -34,71 +34,93 @@
 #'
 #' @examples
 #'
-#' priors=data.frame(Be=c(1500,'LogNormal',log(1500),0.1),
-#'                   be=c(-14.6915,'Gaussian',-14.6915,1),
-#'                   delta=c(0,'Gaussian',0,0.5),
-#'                   ne=c(0.023,'LogNormal',log(0.023),0.2),
-#'                   Q0=c(12500,'Gaussian',12500,10000),
-#'                   dx=c(38000,'Gaussian',38000,1000))
+#' priors <- data.frame(
+#'   Be = c(1500, "LogNormal", log(1500), 0.1),
+#'   be = c(-14.6915, "Gaussian", -14.6915, 1),
+#'   delta = c(0, "Gaussian", 0, 0.5),
+#'   ne = c(0.023, "LogNormal", log(0.023), 0.2),
+#'   Q0 = c(12500, "Gaussian", 12500, 10000),
+#'   dx = c(38000, "Gaussian", 38000, 1000)
+#' )
 #'
-#' Be=RBaM::parameter(name='Be',
-#'                    init=as.numeric(priors$Be[1]),
-#'                    prior.dist=priors$Be[2],
-#'                    prior.par=as.numeric(priors$Be[c(3,4)]))
+#' Be <- RBaM::parameter(
+#'   name = "Be",
+#'   init = as.numeric(priors$Be[1]),
+#'   prior.dist = priors$Be[2],
+#'   prior.par = as.numeric(priors$Be[c(3, 4)])
+#' )
 #'
-#' be=RBaM::parameter(name='be',
-#'                    init=as.numeric(priors$be[1]),
-#'                    prior.dist=priors$be[2],
-#'                    prior.par=as.numeric(priors$be[c(3,4)]))
+#' be <- RBaM::parameter(
+#'   name = "be",
+#'   init = as.numeric(priors$be[1]),
+#'   prior.dist = priors$be[2],
+#'   prior.par = as.numeric(priors$be[c(3, 4)])
+#' )
 #'
-#' delta=RBaM::parameter(name='delta',
-#'                       init=as.numeric(priors$delta[1]),
-#'                       prior.dist=priors$delta[2],
-#'                       prior.par=as.numeric(priors$delta[c(3,4)]))
+#' delta <- RBaM::parameter(
+#'   name = "delta",
+#'   init = as.numeric(priors$delta[1]),
+#'   prior.dist = priors$delta[2],
+#'   prior.par = as.numeric(priors$delta[c(3, 4)])
+#' )
 #'
-#' ne=RBaM::parameter(name='ne',
-#'                    init=as.numeric(priors$ne[1]),
-#'                    prior.dist=priors$ne[2],
-#'                    prior.par=as.numeric(priors$ne[c(3,4)]))
+#' ne <- RBaM::parameter(
+#'   name = "ne",
+#'   init = as.numeric(priors$ne[1]),
+#'   prior.dist = priors$ne[2],
+#'   prior.par = as.numeric(priors$ne[c(3, 4)])
+#' )
 #'
-#' Q0=RBaM::parameter(name='Q0',
-#'                    init=as.numeric(priors$Q0[1]),
-#'                    prior.dist=priors$Q0[2],
-#'                    prior.par=as.numeric(priors$Q0[c(3,4)]))
+#' Q0 <- RBaM::parameter(
+#'   name = "Q0",
+#'   init = as.numeric(priors$Q0[1]),
+#'   prior.dist = priors$Q0[2],
+#'   prior.par = as.numeric(priors$Q0[c(3, 4)])
+#' )
 #'
-#' dx=RBaM::parameter(name='dx',
-#'                    init=as.numeric(priors$dx[1]),
-#'                    prior.dist=priors$dx[2],
-#'                    prior.par=as.numeric(priors$dx[c(3,4)]))
+#' dx <- RBaM::parameter(
+#'   name = "dx",
+#'   init = as.numeric(priors$dx[1]),
+#'   prior.dist = priors$dx[2],
+#'   prior.par = as.numeric(priors$dx[c(3, 4)])
+#' )
 #'
-#' d1= -1.379
-#' d2= -1.958
-#' dt_model= 60
+#' d1 <- -1.379
+#' d2 <- -1.958
+#' dt_model <- 60
 #'
-#' results_calibration=Estimation_Qmec(CalibrationData=Saint_Laurent_F2,
-#'                                     Be_object=Be,
-#'                                     be_object=be,
-#'                                     delta_object=delta,
-#'                                     ne_object=ne,
-#'                                     Q0_object=Q0,
-#'                                     dx_object=dx,
-#'                                     CD1=d1,
-#'                                     CD2=d2,
-#'                                     nCycles = 100,
-#'                                     burn=0.5,
-#'                                     dt_model=dt_model)
+#' results_calibration <- Estimation_Qmec(
+#'   CalibrationData = Saint_Laurent_F2,
+#'   Be_object = Be,
+#'   be_object = be,
+#'   delta_object = delta,
+#'   ne_object = ne,
+#'   Q0_object = Q0,
+#'   dx_object = dx,
+#'   CD1 = d1,
+#'   CD2 = d2,
+#'   nCycles = 100,
+#'   burn = 0.5,
+#'   dt_model = dt_model
+#' )
 #'
-#' Plot_prior_posterior(DF_prior_posterior=results_calibration$prior_vs_posterior)
+#' Plot_prior_posterior(DF_prior_posterior = results_calibration$prior_vs_posterior)
 #'
-#' simulation_QMEC=Prediction_Q_Qmec(CalibrationData=Saint_Laurent_F2,
-#'                                   Model_object=results_calibration$Model_object)
+#' simulation_QMEC <- Prediction_Q_Qmec(
+#'   CalibrationData = Saint_Laurent_F2,
+#'   Model_object = results_calibration$Model_object
+#' )
 #'
-#' plot_Q_sim_Qmec(Q_observed=simulation_QMEC$Data_obs_plot,
-#'                 Q_simulated=simulation_QMEC$Qsim)
+#' plot_Q_sim_Qmec(
+#'   Q_observed = simulation_QMEC$Data_obs_plot,
+#'   Q_simulated = simulation_QMEC$Qsim
+#' )
 #'
-#' plot_shallow_water(pressure_SW=simulation_QMEC$pressure,
-#'                    friction_SW=simulation_QMEC$friction,
-#'                    advection_SW=simulation_QMEC$advection)
+#' plot_shallow_water(
+#'   pressure_SW = simulation_QMEC$pressure,
+#'   friction_SW = simulation_QMEC$friction,
+#'   advection_SW = simulation_QMEC$advection
+#' )
 Estimation_Qmec <- function(CalibrationData,
                             Be_object,
                             be_object,
@@ -110,98 +132,117 @@ Estimation_Qmec <- function(CalibrationData,
                             CD2,
                             dt_model,
                             nCycles = 100,
-                            burn=0.5,
-                            nSlim=max(nCycles/10, 1),
-                            temp_folder = file.path(tempdir(), "BaM")){
-
+                            burn = 0.5,
+                            nSlim = max(nCycles / 10, 1),
+                            temp_folder = file.path(tempdir(), "BaM")) {
   set.seed(2024)
-  CalData_object=RBaM::dataset(X=CalibrationData[c('h1','h2')],
-                               Y=CalibrationData[c('Q')],
-                               Yu=CalibrationData[c('u_Q')],
-                               data.dir = temp_folder)
+  CalData_object <- RBaM::dataset(
+    X = CalibrationData[c("h1", "h2")],
+    Y = CalibrationData[c("Q")],
+    Yu = CalibrationData[c("u_Q")],
+    data.dir = temp_folder
+  )
 
   # Prior information
-  c=RBaM::parameter(name='c',init=4/3,prior.dist='FIX')
-  g=RBaM::parameter(name='g',init=9.81,prior.dist='FIX')
-  dt=RBaM::parameter(name='dt',init=dt_model,prior.dist='FIX')
-  d1=RBaM::parameter(name='d1',init=CD1,prior.dist='FIX')
-  d2=RBaM::parameter(name='d2',init=CD2,prior.dist='FIX')
+  c <- RBaM::parameter(name = "c", init = 4 / 3, prior.dist = "FIX")
+  g <- RBaM::parameter(name = "g", init = 9.81, prior.dist = "FIX")
+  dt <- RBaM::parameter(name = "dt", init = dt_model, prior.dist = "FIX")
+  d1 <- RBaM::parameter(name = "d1", init = CD1, prior.dist = "FIX")
+  d2 <- RBaM::parameter(name = "d2", init = CD2, prior.dist = "FIX")
 
-  param_list <-list(Be_object, # list of model parameters
-                    be_object,
-                    delta_object,
-                    ne_object,
-                    d1,
-                    d2,
-                    c,
-                    g,
-                    Q0_object,
-                    dx_object,
-                    dt)
+  param_list <- list(
+    Be_object, # list of model parameters
+    be_object,
+    delta_object,
+    ne_object,
+    d1,
+    d2,
+    c,
+    g,
+    Q0_object,
+    dx_object,
+    dt
+  )
   # Model
-  Model_object=RBaM::model(ID='SFDTidal_Qmec2',
-                           nX=2,nY=1, # number of input/output variables
-                           par=param_list)
+  Model_object <- RBaM::model(
+    ID = "SFDTidal_Qmec2",
+    nX = 2, nY = 1, # number of input/output variables
+    par = param_list
+  )
 
   # Remnant error
-  remnant=RBaM::remnantErrorModel(funk='Constant',
-                                  par=list(RBaM::parameter(name='gamma1',
-                                                           init=1000,
-                                                           prior.dist='Uniform',
-                                                           prior.par=c(0,10000))))
+  remnant <- RBaM::remnantErrorModel(
+    funk = "Constant",
+    par = list(RBaM::parameter(
+      name = "gamma1",
+      init = 1000,
+      prior.dist = "Uniform",
+      prior.par = c(0, 10000)
+    ))
+  )
 
   # Set up configuration files : careful, same quantity of remnants configuration files as number of observations
-  mcmc_temp=RBaM::mcmcOptions(nCycles=nCycles)
-  cook_temp=RBaM::mcmcCooking(burn=burn,nSlim=nSlim)
+  mcmc_temp <- RBaM::mcmcOptions(nCycles = nCycles)
+  cook_temp <- RBaM::mcmcCooking(burn = burn, nSlim = nSlim)
 
   # Run BaM executable
-  RBaM::BaM(mod=Model_object,
-            data=CalData_object,
-            workspace=temp_folder,
-            doCalib=TRUE,
-            doPred=FALSE,
-            mcmc=mcmc_temp,
-            cook = cook_temp,
-            remnant = list(remnant))
+  RBaM::BaM(
+    mod = Model_object,
+    data = CalData_object,
+    workspace = temp_folder,
+    doCalib = TRUE,
+    doPred = FALSE,
+    mcmc = mcmc_temp,
+    cook = cook_temp,
+    remnant = list(remnant)
+  )
 
   # Analyse results
   # Read 'cooked' MCMC file in the workspace
-  MCMC=RBaM::readMCMC(file.path(temp_folder,'Results_Cooking.txt'))
+  MCMC <- RBaM::readMCMC(file.path(temp_folder, "Results_Cooking.txt"))
 
   # Prior and posterior densities
-  priors_realization = c()
-  j=1
-  for(i in 1:length(param_list)){
-    if(param_list[[i]]$prior$dist!='FIX'){
-
-      priors_realization[[j]]=prior_distributions(distribution=param_list[[i]]$prior$dist,
-                                                  param1=param_list[[i]]$prior$par[1],
-                                                  param2=param_list[[i]]$prior$par[2])
+  priors_realization <- c()
+  j <- 1
+  for (i in 1:length(param_list)) {
+    if (param_list[[i]]$prior$dist != "FIX") {
+      priors_realization[[j]] <- prior_distributions(
+        distribution = param_list[[i]]$prior$dist,
+        param1 = param_list[[i]]$prior$par[1],
+        param2 = param_list[[i]]$prior$par[2]
+      )
 
       names(priors_realization)[[j]] <- param_list[[i]]$name
-      j=j+1
+      j <- j + 1
     }
   }
 
   prior.density <- as.data.frame(priors_realization)
 
   prior_vs_posterior <- c()
-  for(i in 1:ncol(prior.density)){
-    prior.par.DF <- data.frame(value=prior.density[,i],
-                               Distributions=rep('Prior',nrow(prior.density)),
-                               id=rep(colnames(prior.density)[i]))
-    posterior.par.DF <- data.frame(value=MCMC[,i],
-                                   Distributions=rep('Posterior',nrow(MCMC)),
-                                   id=rep(colnames(MCMC)[i]))
-    prior_vs_posterior <- rbind(prior_vs_posterior,
-                                prior.par.DF,
-                                posterior.par.DF)
+  for (i in 1:ncol(prior.density)) {
+    prior.par.DF <- data.frame(
+      value = prior.density[, i],
+      Distributions = rep("Prior", nrow(prior.density)),
+      id = rep(colnames(prior.density)[i])
+    )
+    posterior.par.DF <- data.frame(
+      value = MCMC[, i],
+      Distributions = rep("Posterior", nrow(MCMC)),
+      id = rep(colnames(MCMC)[i])
+    )
+    prior_vs_posterior <- rbind(
+      prior_vs_posterior,
+      prior.par.DF,
+      posterior.par.DF
+    )
   }
 
-  return(list(MCMC=MCMC,
-              prior_vs_posterior=prior_vs_posterior,
-              Model_object=Model_object))
-
+  return(list(
+    MCMC = MCMC,
+    prior_vs_posterior = prior_vs_posterior,
+    Model_object = Model_object
+  ))
 }
 
 #' Discharge simulation with uncertainties
@@ -252,193 +293,266 @@ Estimation_Qmec <- function(CalibrationData,
 Prediction_Q_Qmec <- function(CalibrationData,
                               Model_object,
                               temp_folder = file.path(tempdir(), "BaM"),
-                              DoParam_Unc=TRUE,
-                              DoTotal_Unc=TRUE){
+                              DoParam_Unc = TRUE,
+                              DoTotal_Unc = TRUE) {
   set.seed(2024)
-  CalData_object=RBaM::dataset(X=CalibrationData[c('h1','h2')],
-                               Y=CalibrationData[c('Q')],
-                               Yu=CalibrationData[c('u_Q')],
-                               data.dir = temp_folder)
+  CalData_object <- RBaM::dataset(
+    X = CalibrationData[c("h1", "h2")],
+    Y = CalibrationData[c("Q")],
+    Yu = CalibrationData[c("u_Q")],
+    data.dir = temp_folder
+  )
 
   # Define a 'prediction' object with no uncertainty - this corresponds to the 'maxpost' discharge maximizing the posterior
-  maxpost=RBaM::prediction(X=CalData_object$data[c('h1','h2')],
-                           spagFiles='Q_maxpost.spag',
-                           data.dir=temp_folder,
-                           doParametric=FALSE,doStructural=FALSE,
-                           spagFiles_state =c('pressureMax.spag',
-                                              'frictionMax.spag',
-                                              'advectionMax.spag'))
+  maxpost <- RBaM::prediction(
+    X = CalData_object$data[c("h1", "h2")],
+    spagFiles = "Q_maxpost.spag",
+    data.dir = temp_folder,
+    doParametric = FALSE, doStructural = FALSE,
+    spagFiles_state = c(
+      "pressureMax.spag",
+      "frictionMax.spag",
+      "advectionMax.spag"
+    )
+  )
 
-  pred_list=list(maxpost)
-  inx=1 # track if more than one prediction experiment was defined
+  pred_list <- list(maxpost)
+  inx <- 1 # track if more than one prediction experiment was defined
 
-  if(DoParam_Unc){
-    inx=inx+1
+  if (DoParam_Unc) {
+    inx <- inx + 1
     # Define a 'prediction' object for parametric uncertainty only - not the doStructural=FALSE
-    paramU=RBaM::prediction(X=CalData_object$data[c('h1','h2')],
-                            spagFiles='Q_paramU.spag',
-                            data.dir=temp_folder,
-                            doParametric=TRUE,
-                            doStructural=FALSE,
-                            spagFiles_state =c('pressureParam.spag',
-                                               'frictionParam.spag',
-                                               'advectionParam.spag'))
+    paramU <- RBaM::prediction(
+      X = CalData_object$data[c("h1", "h2")],
+      spagFiles = "Q_paramU.spag",
+      data.dir = temp_folder,
+      doParametric = TRUE,
+      doStructural = FALSE,
+      spagFiles_state = c(
+        "pressureParam.spag",
+        "frictionParam.spag",
+        "advectionParam.spag"
+      )
+    )
 
-    pred_list[[inx]]=paramU
+    pred_list[[inx]] <- paramU
   }
 
-  if(DoTotal_Unc){
-    inx=inx+1
+  if (DoTotal_Unc) {
+    inx <- inx + 1
     # Define a 'prediction' object for total predictive uncertainty
-    totalU=RBaM::prediction(X=CalData_object$data[c('h1','h2')], # stage values
-                            spagFiles='Q_totalU.spag', # file where predictions are saved
-                            data.dir=temp_folder, # a copy of data files will be saved here
-                            doParametric=TRUE, # propagate parametric uncertainty, i.e. MCMC samples?
-                            doStructural=TRUE,
-                            spagFiles_state =c('pressureTot.spag',
-                                               'frictionTot.spag',
-                                               'advectionTot.spag'))
-    pred_list[[inx]]=totalU
+    totalU <- RBaM::prediction(
+      X = CalData_object$data[c("h1", "h2")], # stage values
+      spagFiles = "Q_totalU.spag", # file where predictions are saved
+      data.dir = temp_folder, # a copy of data files will be saved here
+      doParametric = TRUE, # propagate parametric uncertainty, i.e. MCMC samples?
+      doStructural = TRUE,
+      spagFiles_state = c(
+        "pressureTot.spag",
+        "frictionTot.spag",
+        "advectionTot.spag"
+      )
+    )
+    pred_list[[inx]] <- totalU
   }
   # SOMETHIG IS WRONG WITH state spagFiles, total and parametric envelop are the same!
   # Remnant error
-  remnant=RBaM::remnantErrorModel(funk='Constant',
-                                  par=list(RBaM::parameter(name='gamma1',
-                                                           init=1000,
-                                                           prior.dist='Uniform',
-                                                           prior.par=c(0,10000))))
-  #Re-run BaM, but in prediction mode
-  RBaM::BaM(mod=Model_object,
-            data=CalData_object,
-            remnant=list(remnant),
-            workspace=temp_folder,
-            pred=pred_list, # list of predictions
-            doCalib=FALSE,
-            doPred=TRUE) # Do not re-calibrate but do predictions
+  remnant <- RBaM::remnantErrorModel(
+    funk = "Constant",
+    par = list(RBaM::parameter(
+      name = "gamma1",
+      init = 1000,
+      prior.dist = "Uniform",
+      prior.par = c(0, 10000)
+    ))
+  )
+  # Re-run BaM, but in prediction mode
+  RBaM::BaM(
+    mod = Model_object,
+    data = CalData_object,
+    remnant = list(remnant),
+    workspace = temp_folder,
+    pred = pred_list, # list of predictions
+    doCalib = FALSE,
+    doPred = TRUE
+  ) # Do not re-calibrate but do predictions
 
   # Transform -9999 to NA (missing values)
-  CalibrationData$Q[which(CalibrationData$Q==-9999)] <- NA
-  CalibrationData$u_Q[which(CalibrationData$u_Q==-9999)] <- NA
+  CalibrationData$Q[which(CalibrationData$Q == -9999)] <- NA
+  CalibrationData$u_Q[which(CalibrationData$u_Q == -9999)] <- NA
 
-  Data_obs_plot = CalibrationData[which(!is.na(CalibrationData$Q)),]
-  date_indx = data.frame(date=CalibrationData$date)
+  Data_obs_plot <- CalibrationData[which(!is.na(CalibrationData$Q)), ]
+  date_indx <- data.frame(date = CalibrationData$date)
 
   # Add time to the prediction experiments to return them
-  i=0
+  i <- 0
   # Create list to store all components
-  Qsim_list = list()
-  pressure_list = list()
-  friction_list = list()
-  advection_list = list()
+  Qsim_list <- list()
+  pressure_list <- list()
+  friction_list <- list()
+  advection_list <- list()
 
-  if(DoTotal_Unc){
+  if (DoTotal_Unc) {
     # Total uncertainty:
-    QSim_TotalU= data.frame(date_indx,
-                            read.table(file.path(temp_folder,
-                                                 'Q_totalU.env'),
-                                       header = T),
-                            id='totalU')
+    QSim_TotalU <- data.frame(date_indx,
+      read.table(
+        file.path(
+          temp_folder,
+          "Q_totalU.env"
+        ),
+        header = T
+      ),
+      id = "totalU"
+    )
 
-    pressure_TotalU= data.frame(date_indx,
-                                read.table(file.path(temp_folder,
-                                                     'pressuretot.env'),
-                                           header = T),
-                                id='totalPressure')
+    pressure_TotalU <- data.frame(date_indx,
+      read.table(
+        file.path(
+          temp_folder,
+          "pressureTot.env"
+        ),
+        header = T
+      ),
+      id = "totalPressure"
+    )
 
-    friction_TotalU= data.frame(date_indx,
-                                read.table(file.path(temp_folder,
-                                                     'frictiontot.env'),
-                                           header = T),
-                                id='totalFriction')
+    friction_TotalU <- data.frame(date_indx,
+      read.table(
+        file.path(
+          temp_folder,
+          "frictionTot.env"
+        ),
+        header = T
+      ),
+      id = "totalFriction"
+    )
 
-    advection_TotalU= data.frame(date_indx,
-                                 read.table(file.path(temp_folder,
-                                                      'advectiontot.env'),
-                                            header = T),
-                                 id='totalAdvection')
-    i=i+1
-    Qsim_list[[i]] = QSim_TotalU
-    names( Qsim_list )[[i]] = 'TotalU'
-    pressure_list[[i]] = pressure_TotalU
-    names( pressure_list )[[i]] = 'TotalU'
-    friction_list[[i]] = friction_TotalU
-    names( friction_list )[[i]] = 'TotalU'
-    advection_list[[i]] = advection_TotalU
-    names( advection_list )[[i]] = 'TotalU'
+    advection_TotalU <- data.frame(date_indx,
+      read.table(
+        file.path(
+          temp_folder,
+          "advectionTot.env"
+        ),
+        header = T
+      ),
+      id = "totalAdvection"
+    )
+    i <- i + 1
+    Qsim_list[[i]] <- QSim_TotalU
+    names(Qsim_list)[[i]] <- "TotalU"
+    pressure_list[[i]] <- pressure_TotalU
+    names(pressure_list)[[i]] <- "TotalU"
+    friction_list[[i]] <- friction_TotalU
+    names(friction_list)[[i]] <- "TotalU"
+    advection_list[[i]] <- advection_TotalU
+    names(advection_list)[[i]] <- "TotalU"
   }
 
-  if(DoParam_Unc){
+  if (DoParam_Unc) {
     # Parametric uncertainty:
-    QSim_paramU = data.frame(date_indx,
-                             read.table(file.path(temp_folder,
-                                                  'Q_paramU.env'),
-                                        header = T),
-                             id='paramU')
+    QSim_paramU <- data.frame(date_indx,
+      read.table(
+        file.path(
+          temp_folder,
+          "Q_paramU.env"
+        ),
+        header = T
+      ),
+      id = "paramU"
+    )
 
-    pressure_paramU = data.frame(date_indx,
-                                 read.table(file.path(temp_folder,
-                                                      'pressureparam.env'),
-                                            header = T),
-                                 id='paramPressure')
+    pressure_paramU <- data.frame(date_indx,
+      read.table(
+        file.path(
+          temp_folder,
+          "pressureparam.env"
+        ),
+        header = T
+      ),
+      id = "paramPressure"
+    )
 
-    friction_paramU = data.frame(date_indx,
-                                 read.table(file.path(temp_folder,
-                                                      'frictionparam.env'),
-                                            header = T),
-                                 id='paramFriction')
+    friction_paramU <- data.frame(date_indx,
+      read.table(
+        file.path(
+          temp_folder,
+          "frictionparam.env"
+        ),
+        header = T
+      ),
+      id = "paramFriction"
+    )
 
-    advection_paramU = data.frame(date_indx,
-                                  read.table(file.path(temp_folder,
-                                                       'advectionparam.env'),
-                                             header = T),
-                                  id='paramAdvection')
-    i=i+1
-    Qsim_list[[i]] = QSim_paramU
-    names( Qsim_list )[[i]] = 'ParamU'
-    pressure_list[[i]] = pressure_paramU
-    names( pressure_list )[[i]] = 'ParamU'
-    friction_list[[i]] = friction_paramU
-    names( friction_list )[[i]] = 'ParamU'
-    advection_list[[i]] = advection_paramU
-    names( advection_list )[[i]] = 'ParamU'
+    advection_paramU <- data.frame(date_indx,
+      read.table(
+        file.path(
+          temp_folder,
+          "advectionparam.env"
+        ),
+        header = T
+      ),
+      id = "paramAdvection"
+    )
+    i <- i + 1
+    Qsim_list[[i]] <- QSim_paramU
+    names(Qsim_list)[[i]] <- "ParamU"
+    pressure_list[[i]] <- pressure_paramU
+    names(pressure_list)[[i]] <- "ParamU"
+    friction_list[[i]] <- friction_paramU
+    names(friction_list)[[i]] <- "ParamU"
+    advection_list[[i]] <- advection_paramU
+    names(advection_list)[[i]] <- "ParamU"
   }
   # MaxPost:
-  i=i+1
+  i <- i + 1
 
-  QSim_MaxPost = data.frame(date_indx,
-                            read.table(file.path(temp_folder,
-                                                 'Q_maxpost.spag')),
-                            id='MaxPost')
+  QSim_MaxPost <- data.frame(date_indx,
+    read.table(file.path(
+      temp_folder,
+      "Q_maxpost.spag"
+    )),
+    id = "MaxPost"
+  )
 
-  pressure_MaxPost = data.frame(date_indx,
-                                read.table(file.path(temp_folder,
-                                                     'pressuremax.spag')),
-                                id='MaxPostPressure')
+  pressure_MaxPost <- data.frame(date_indx,
+    read.table(file.path(
+      temp_folder,
+      "pressuremax.spag"
+    )),
+    id = "MaxPostPressure"
+  )
 
-  friction_MaxPost = data.frame(date_indx,
-                                read.table(file.path(temp_folder,
-                                                     'frictionmax.spag')),
-                                id='MaxPostFriction')
+  friction_MaxPost <- data.frame(date_indx,
+    read.table(file.path(
+      temp_folder,
+      "frictionmax.spag"
+    )),
+    id = "MaxPostFriction"
+  )
 
-  advection_MaxPost = data.frame(date_indx,
-                                 read.table(file.path(temp_folder,
-                                                      'advectionmax.spag')),
-                                 id='MaxPostAdvection')
+  advection_MaxPost <- data.frame(date_indx,
+    read.table(file.path(
+      temp_folder,
+      "advectionmax.spag"
+    )),
+    id = "MaxPostAdvection"
+  )
 
   # Create list to store all components
-  Qsim_list[[i]] = QSim_MaxPost
-  names( Qsim_list )[[i]] = 'MaxPost'
-  pressure_list[[i]] = pressure_MaxPost
-  names( pressure_list )[[i]] = 'MaxPost'
-  friction_list[[i]] = friction_MaxPost
-  names( friction_list )[[i]] = 'MaxPost'
-  advection_list[[i]] = advection_MaxPost
-  names( advection_list )[[i]] = 'MaxPost'
+  Qsim_list[[i]] <- QSim_MaxPost
+  names(Qsim_list)[[i]] <- "MaxPost"
+  pressure_list[[i]] <- pressure_MaxPost
+  names(pressure_list)[[i]] <- "MaxPost"
+  friction_list[[i]] <- friction_MaxPost
+  names(friction_list)[[i]] <- "MaxPost"
+  advection_list[[i]] <- advection_MaxPost
+  names(advection_list)[[i]] <- "MaxPost"
 
-  return(list(Data_obs_plot=Data_obs_plot,
-              Qsim=Qsim_list,
-              pressure=pressure_list,
-              friction=friction_list,
-              advection=advection_list))
-
+  return(list(
+    Data_obs_plot = Data_obs_plot,
+    Qsim = Qsim_list,
+    pressure = pressure_list,
+    friction = friction_list,
+    advection = advection_list
+  ))
 }
