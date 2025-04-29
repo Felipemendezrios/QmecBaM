@@ -12,13 +12,13 @@ Author: c(
 	person("INRAE", role = c("fnd")),
     person("Ministère de la Transition Ecologique - SCHAPI", role = c("fnd"))))
 Maintainer: <felipe-alberto.mendez-rios@inrae.fr>
-Description: Qmec is a physically based, fully nonlinear, and nonstead reach-averaged river model 
-	to provide instantaneous freshwater discharge rates in tidal rivers using water level measurements 
-	alone at two tide gauge stations. 
+Description: Qmec is a physically based, fully nonlinear, and nonstead reach-averaged river model
+	to provide instantaneous freshwater discharge rates in tidal rivers using water level measurements
+	alone at two tide gauge stations.
 	This model was developed by Bourgault, D., & Matte P. (2021) <https://doi.org/10.1029/2019JC015992>,
 	and its main code is published here: <https://codeocean.com/capsule/8881837/tree/v2>.
 	This version is enhanced by the incorporation of associated uncertainties during calibration and simulation,
-	achieved using Bayesian estimation, as practically applied by BaM!.
+	achieved using Bayesian estimation, as practically applied by BaM! .
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -27,5 +27,5 @@ RoxygenNote: 7.3.1
 Imports:
 	RBaM,
 	ggplot2
-Depends: 
+Depends:
     R (>= 3.5.0)
