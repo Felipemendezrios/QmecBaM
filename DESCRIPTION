@@ -18,7 +18,7 @@ Description: Qmec is a physically based, fully nonlinear, and nonstead reach-ave
 	This model was developed by Bourgault, D., & Matte P. (2021) <https://doi.org/10.1029/2019JC015992>,
 	and its main code is published here: <https://codeocean.com/capsule/8881837/tree/v2>.
 	This version is enhanced by the incorporation of associated uncertainties during calibration and simulation,
-	achieved using Bayesian estimation, as practically applied by BaM! .
+	achieved using Bayesian estimation, as practically applied by BaM!.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
