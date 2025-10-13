@@ -527,8 +527,7 @@ input_stage_plot_LS +
 
 <img src="man/figures/README-unnamed-chunk-12-3.png" width="100%" />
 
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 
 <div id="ref-bourgaultPhysicallyBasedMethod2020" class="csl-entry">
 
