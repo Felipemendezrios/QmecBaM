@@ -194,7 +194,13 @@ Estimation_Qmec <- function(CalibrationData,
     doPred = FALSE,
     mcmc = mcmc_temp,
     cook = cook_temp,
-    remnant = list(remnant)
+    remnant = list(remnant),
+    summary = RBaM::mcmcSummary(
+      fname = "Config_Summary.txt",
+      result.fname = "Results_Summary.txt",
+      DIC.fname = "Results_DIC.txt",
+      xtendedMCMC.fname = "Results_extended.txt"
+    )
   )
 
   # Analyse results
