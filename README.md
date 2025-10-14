@@ -204,7 +204,8 @@ discharge time series.
 ``` r
 simulation_QMEC <- Prediction_Q_Qmec(
      CalibrationData = Saint_Laurent_F2,
-     Model_object = results_calibration$Model_object
+     Model_object = results_calibration$Model_object,
+     dt = 60 # seconds
 )
 ```
 
@@ -244,7 +245,8 @@ understand tidal dynamics:
 SW_plot <- plot_shallow_water(
      pressure_SW = simulation_QMEC$pressure,
      friction_SW = simulation_QMEC$friction,
-     advection_SW = simulation_QMEC$advection
+     advection_SW = simulation_QMEC$advection,
+     MaxPostOnly = FALSE
 )
 # Total uncertainty:
 SW_plot$TotalU

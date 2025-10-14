@@ -300,7 +300,8 @@ Prediction_Q_Qmec <- function(CalibrationData,
                               Model_object,
                               temp_folder = file.path(tempdir(), "BaM"),
                               DoParam_Unc = TRUE,
-                              DoTotal_Unc = TRUE) {
+                              DoTotal_Unc = TRUE,
+                              dt = 60) {
   set.seed(2024)
   CalData_object <- RBaM::dataset(
     X = CalibrationData[c("h1", "h2")],
@@ -418,7 +419,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
           "pressureTot.env"
         ),
         header = T
-      ),
+      ) / dt,
       id = "totalPressure"
     )
 
@@ -429,7 +430,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
           "frictionTot.env"
         ),
         header = T
-      ),
+      ) / dt,
       id = "totalFriction"
     )
 
@@ -440,7 +441,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
           "advectionTot.env"
         ),
         header = T
-      ),
+      ) / dt,
       id = "totalAdvection"
     )
     i <- i + 1
@@ -474,7 +475,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
           "pressureParam.env"
         ),
         header = T
-      ),
+      ) / dt,
       id = "paramPressure"
     )
 
@@ -485,7 +486,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
           "frictionParam.env"
         ),
         header = T
-      ),
+      ) / dt,
       id = "paramFriction"
     )
 
@@ -496,7 +497,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
           "advectionParam.env"
         ),
         header = T
-      ),
+      ) / dt,
       id = "paramAdvection"
     )
     i <- i + 1
@@ -524,7 +525,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
     read.table(file.path(
       temp_folder,
       "pressureMax.spag"
-    )),
+    )) / dt,
     id = "MaxPostPressure"
   )
 
@@ -532,7 +533,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
     read.table(file.path(
       temp_folder,
       "frictionMax.spag"
-    )),
+    )) / dt,
     id = "MaxPostFriction"
   )
 
@@ -540,7 +541,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
     read.table(file.path(
       temp_folder,
       "advectionMax.spag"
-    )),
+    )) / dt,
     id = "MaxPostAdvection"
   )
 

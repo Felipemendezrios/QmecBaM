@@ -88,7 +88,7 @@ plot_Q_sim_Qmec <- function(Q_observed,
     )
 
   plot_Q <- plot_Q +
-    labs(x = "Time", y = "Discharge (m3/s)") +
+    labs(x = "Time", y = expression("Discharge (" * m^3 * "/" * s * ")")) +
     scale_color_manual(
       name = "Discharge",
       values = c("MaxPost" = "black", "Gaugings" = "green"),
@@ -127,18 +127,17 @@ plot_shallow_water <- function(pressure_SW,
   plot_SW <- list()
   combined_SW <- list()
 
+  combined_SW_MaxPost <- data.frame(
+    date = pressure_SW$MaxPost$date,
+    min = c(pressure_SW$MaxPost$V1 +
+      friction_SW$MaxPost$V1 +
+      advection_SW$MaxPost$V1),
+    max = c(pressure_SW$MaxPost$V1 +
+      friction_SW$MaxPost$V1 +
+      advection_SW$MaxPost$V1),
+    id = "Sum"
+  )
   if (MaxPostOnly) {
-    combined_SW <- data.frame(
-      date = pressure_SW$MaxPost$date,
-      min = c(pressure_SW$MaxPost$V1 +
-        friction_SW$MaxPost$V1 +
-        advection_SW$MaxPost$V1),
-      max = c(pressure_SW$MaxPost$V1 +
-        friction_SW$MaxPost$V1 +
-        advection_SW$MaxPost$V1),
-      id = "Sum"
-    )
-
     plot_SW <- ggplot() +
       geom_line(
         data = pressure_SW$MaxPost,
@@ -147,7 +146,8 @@ plot_shallow_water <- function(pressure_SW,
           y = V1,
           color = factor(id)
         ),
-        linewidth = 1
+        linewidth = 1,
+        linetype = "dotdash"
       ) +
       geom_line(
         data = friction_SW$MaxPost,
@@ -156,7 +156,8 @@ plot_shallow_water <- function(pressure_SW,
           y = V1,
           color = factor(id)
         ),
-        linewidth = 1
+        linewidth = 1,
+        linetype = "dotted"
       ) +
       geom_line(
         data = advection_SW$MaxPost,
@@ -165,7 +166,18 @@ plot_shallow_water <- function(pressure_SW,
           y = V1,
           color = factor(id)
         ),
-        linewidth = 1
+        linewidth = 1,
+        linetype = "twodash"
+      ) +
+      geom_line(
+        data = combined_SW_MaxPost,
+        aes(
+          x = date,
+          y = min,
+          color = factor(id)
+        ),
+        linewidth = 1,
+        linetype = "solid"
       ) +
       scale_color_manual(
         name = "1D Shallow Water \ncomponents",
@@ -185,7 +197,7 @@ plot_shallow_water <- function(pressure_SW,
       labs(
         title = "Maximum posterior estimation",
         x = "Time",
-        y = expression("Discharge gradient (" * m^3 * "/" * s^2 * ")")
+        y = expression(atop("Rate of change of", "the discharge (" * m^3 * "/" * s^2 * ")"))
       ) +
       theme_bw() +
       theme(
@@ -208,7 +220,8 @@ plot_shallow_water <- function(pressure_SW,
                 y = V1,
                 color = factor(id)
               ),
-              linewidth = 1
+              linewidth = 1,
+              linetype = "dotdash"
             ) +
             geom_line(
               data = friction_SW$MaxPost,
@@ -217,7 +230,8 @@ plot_shallow_water <- function(pressure_SW,
                 y = V1,
                 color = factor(id)
               ),
-              linewidth = 1
+              linewidth = 1,
+              linetype = "dotted"
             ) +
             geom_line(
               data = advection_SW$MaxPost,
@@ -226,7 +240,18 @@ plot_shallow_water <- function(pressure_SW,
                 y = V1,
                 color = factor(id)
               ),
-              linewidth = 1
+              linewidth = 1,
+              linetype = "twodash"
+            ) +
+            geom_line(
+              data = combined_SW_MaxPost,
+              aes(
+                x = date,
+                y = min,
+                color = factor(id)
+              ),
+              linewidth = 1,
+              linetype = "solid"
             ) +
             scale_color_manual(
               name = "1D Shallow Water \ncomponents",
@@ -246,7 +271,7 @@ plot_shallow_water <- function(pressure_SW,
             labs(
               title = "Maximum posterior estimation",
               x = "Time",
-              y = expression("Discharge gradient (" * m^3 * "/" * s^2 * ")")
+              y = expression(atop("Rate of change of", "the discharge (" * m^3 * "/" * s^2 * ")"))
             ) +
             theme_bw() +
             theme(
@@ -339,7 +364,7 @@ plot_shallow_water <- function(pressure_SW,
             labs(
               title = title_customized,
               x = "Time",
-              y = expression("Discharge gradient (" * m^3 * "/" * s^2 * ")")
+              y = expression(atop("Rate of change of", "the discharge (" * m^3 * "/" * s^2 * ")"))
             ) +
             theme_bw() +
             theme(
