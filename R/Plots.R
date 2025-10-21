@@ -85,7 +85,17 @@ plot_Q_sim_Qmec <- function(Q_observed,
         color = "Gaugings"
       ),
       size = 1
+    ) +
+    geom_errorbar(
+      data = Q_observed,
+      aes(
+        x = date,
+        ymin = Q - qnorm(0.975) * u_Q,
+        ymax = Q + qnorm(0.975) * u_Q,
+        color = "Gaugings"
+      )
     )
+
 
   plot_Q <- plot_Q +
     labs(x = "Time", y = expression("Discharge (" * m^3 * "/" * s * ")")) +
@@ -101,7 +111,7 @@ plot_Q_sim_Qmec <- function(Q_observed,
     ) +
     guides(color = guide_legend(override.aes = list(
       shape = c(NA, 16),
-      linetype = c(1, 0)
+      linetype = c(1, 1)
     ))) +
     theme_bw() +
     theme(legend.title = element_text(hjust = 0.5, size = 12))

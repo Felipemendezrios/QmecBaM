@@ -17,6 +17,7 @@
 #' @param nCycles integer, number of MCMC adaptation cycles. Total number of simulations equal to 100*nCycles
 #' @param burn real between 0 (included) and 1 (excluded), MCMC burning factor
 #' @param nSlim integer, MCMC slim step
+#' @param Nb_column_time_CalData integer, column number of calibration data corresponding to temporal grid to write in temporal or specified folder
 #'
 #' @return list with the following components:
 #' \enumerate{
@@ -134,7 +135,8 @@ Estimation_Qmec <- function(CalibrationData,
                             nCycles = 100,
                             burn = 0.5,
                             nSlim = max(nCycles / 10, 1),
-                            temp_folder = file.path(tempdir(), "BaM")) {
+                            temp_folder = file.path(tempdir(), "BaM"),
+                            Nb_column_time_CalData = 7) {
   set.seed(2024)
   CalData_object <- RBaM::dataset(
     X = CalibrationData[c("h1", "h2")],
@@ -185,6 +187,11 @@ Estimation_Qmec <- function(CalibrationData,
   mcmc_temp <- RBaM::mcmcOptions(nCycles = nCycles)
   cook_temp <- RBaM::mcmcCooking(burn = burn, nSlim = nSlim)
 
+  # Export temporal grid in temporal folder
+  write.table(CalibrationData[, Nb_column_time_CalData],
+    file = file.path(temp_folder, "temporal_grid.txt"),
+    col.names = TRUE
+  )
   # Run BaM executable
   RBaM::BaM(
     mod = Model_object,
