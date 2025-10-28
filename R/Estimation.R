@@ -209,7 +209,7 @@ Estimation_Qmec <- function(CalibrationData,
   # Export temporal grid in temporal folder
   write.table(CalibrationData[, Nb_column_time_CalData],
     file = file.path(temp_folder, "temporal_grid.txt"),
-    col.names = TRUE
+    col.names = TRUE, row.names = FALSE
   )
 
   # Analyse results
