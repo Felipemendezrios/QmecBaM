@@ -157,7 +157,8 @@ results_calibration <- Estimation_Qmec(
      dx_object = dx,
      CD1 = d1,
      CD2 = d2,
-     dt_model = dt_model
+     dt_model = dt_model,
+     Nb_column_time_CalData = 7
 )
 
 # See MCMC results:
@@ -403,7 +404,8 @@ results_calibration_LS <- Estimation_Qmec(
      dx_object = dx_LS,
      CD1 = d1_LS,
      CD2 = d2_LS,
-     dt_model = dt_model_LS
+     dt_model = dt_model_LS,
+     Nb_column_time_CalData = 1
 )
 
 # See MCMC results:

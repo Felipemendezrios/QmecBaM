@@ -102,7 +102,8 @@
 #'   CD2 = d2,
 #'   nCycles = 100,
 #'   burn = 0.5,
-#'   dt_model = dt_model
+#'   dt_model = dt_model,
+#'   Nb_column_time_CalData = 7
 #' )
 #'
 #' Plot_prior_posterior(DF_prior_posterior = results_calibration$prior_vs_posterior)
@@ -136,7 +137,7 @@ Estimation_Qmec <- function(CalibrationData,
                             burn = 0.5,
                             nSlim = max(nCycles / 10, 1),
                             temp_folder = file.path(tempdir(), "BaM"),
-                            Nb_column_time_CalData = 7) {
+                            Nb_column_time_CalData) {
   set.seed(2024)
   CalData_object <- RBaM::dataset(
     X = CalibrationData[c("h1", "h2")],
