@@ -18,7 +18,8 @@ Estimation_Qmec(
   nCycles = 100,
   burn = 0.5,
   nSlim = max(nCycles/10, 1),
-  temp_folder = file.path(tempdir(), "BaM")
+  temp_folder = file.path(tempdir(), "BaM"),
+  Nb_column_time_CalData = 7
 )
 }
 \arguments{
@@ -49,6 +50,8 @@ Estimation_Qmec(
 \item{nSlim}{integer, MCMC slim step}
 
 \item{temp_folder}{directory, temporary directory to write computations}
+
+\item{Nb_column_time_CalData}{integer, column number of calibration data corresponding to temporal grid to write in temporal or specified folder}
 }
 \value{
 list with the following components:
@@ -69,69 +72,91 @@ discharge time series with quantified uncertainties
 }
 \examples{
 
-priors=data.frame(Be=c(1500,'LogNormal',log(1500),0.1),
-                  be=c(-14.6915,'Gaussian',-14.6915,1),
-                  delta=c(0,'Gaussian',0,0.5),
-                  ne=c(0.023,'LogNormal',log(0.023),0.2),
-                  Q0=c(12500,'Gaussian',12500,10000),
-                  dx=c(38000,'Gaussian',38000,1000))
+priors <- data.frame(
+  Be = c(1500, "LogNormal", log(1500), 0.1),
+  be = c(-14.6915, "Gaussian", -14.6915, 1),
+  delta = c(0, "Gaussian", 0, 0.5),
+  ne = c(0.023, "LogNormal", log(0.023), 0.2),
+  Q0 = c(12500, "Gaussian", 12500, 10000),
+  dx = c(38000, "Gaussian", 38000, 1000)
+)
 
-Be=RBaM::parameter(name='Be',
-                   init=as.numeric(priors$Be[1]),
-                   prior.dist=priors$Be[2],
-                   prior.par=as.numeric(priors$Be[c(3,4)]))
+Be <- RBaM::parameter(
+  name = "Be",
+  init = as.numeric(priors$Be[1]),
+  prior.dist = priors$Be[2],
+  prior.par = as.numeric(priors$Be[c(3, 4)])
+)
 
-be=RBaM::parameter(name='be',
-                   init=as.numeric(priors$be[1]),
-                   prior.dist=priors$be[2],
-                   prior.par=as.numeric(priors$be[c(3,4)]))
+be <- RBaM::parameter(
+  name = "be",
+  init = as.numeric(priors$be[1]),
+  prior.dist = priors$be[2],
+  prior.par = as.numeric(priors$be[c(3, 4)])
+)
 
-delta=RBaM::parameter(name='delta',
-                      init=as.numeric(priors$delta[1]),
-                      prior.dist=priors$delta[2],
-                      prior.par=as.numeric(priors$delta[c(3,4)]))
+delta <- RBaM::parameter(
+  name = "delta",
+  init = as.numeric(priors$delta[1]),
+  prior.dist = priors$delta[2],
+  prior.par = as.numeric(priors$delta[c(3, 4)])
+)
 
-ne=RBaM::parameter(name='ne',
-                   init=as.numeric(priors$ne[1]),
-                   prior.dist=priors$ne[2],
-                   prior.par=as.numeric(priors$ne[c(3,4)]))
+ne <- RBaM::parameter(
+  name = "ne",
+  init = as.numeric(priors$ne[1]),
+  prior.dist = priors$ne[2],
+  prior.par = as.numeric(priors$ne[c(3, 4)])
+)
 
-Q0=RBaM::parameter(name='Q0',
-                   init=as.numeric(priors$Q0[1]),
-                   prior.dist=priors$Q0[2],
-                   prior.par=as.numeric(priors$Q0[c(3,4)]))
+Q0 <- RBaM::parameter(
+  name = "Q0",
+  init = as.numeric(priors$Q0[1]),
+  prior.dist = priors$Q0[2],
+  prior.par = as.numeric(priors$Q0[c(3, 4)])
+)
 
-dx=RBaM::parameter(name='dx',
-                   init=as.numeric(priors$dx[1]),
-                   prior.dist=priors$dx[2],
-                   prior.par=as.numeric(priors$dx[c(3,4)]))
+dx <- RBaM::parameter(
+  name = "dx",
+  init = as.numeric(priors$dx[1]),
+  prior.dist = priors$dx[2],
+  prior.par = as.numeric(priors$dx[c(3, 4)])
+)
 
-d1= -1.379
-d2= -1.958
-dt_model= 60
+d1 <- -1.379
+d2 <- -1.958
+dt_model <- 60
 
-results_calibration=Estimation_Qmec(CalibrationData=Saint_Laurent_F2,
-                                    Be_object=Be,
-                                    be_object=be,
-                                    delta_object=delta,
-                                    ne_object=ne,
-                                    Q0_object=Q0,
-                                    dx_object=dx,
-                                    CD1=d1,
-                                    CD2=d2,
-                                    nCycles = 100,
-                                    burn=0.5,
-                                    dt_model=dt_model)
+results_calibration <- Estimation_Qmec(
+  CalibrationData = Saint_Laurent_F2,
+  Be_object = Be,
+  be_object = be,
+  delta_object = delta,
+  ne_object = ne,
+  Q0_object = Q0,
+  dx_object = dx,
+  CD1 = d1,
+  CD2 = d2,
+  nCycles = 100,
+  burn = 0.5,
+  dt_model = dt_model
+)
 
-Plot_prior_posterior(DF_prior_posterior=results_calibration$prior_vs_posterior)
+Plot_prior_posterior(DF_prior_posterior = results_calibration$prior_vs_posterior)
 
-simulation_QMEC=Prediction_Q_Qmec(CalibrationData=Saint_Laurent_F2,
-                                  Model_object=results_calibration$Model_object)
+simulation_QMEC <- Prediction_Q_Qmec(
+  CalibrationData = Saint_Laurent_F2,
+  Model_object = results_calibration$Model_object
+)
 
-plot_Q_sim_Qmec(Q_observed=simulation_QMEC$Data_obs_plot,
-                Q_simulated=simulation_QMEC$Qsim)
+plot_Q_sim_Qmec(
+  Q_observed = simulation_QMEC$Data_obs_plot,
+  Q_simulated = simulation_QMEC$Qsim
+)
 
-plot_shallow_water(pressure_SW=simulation_QMEC$pressure,
-                   friction_SW=simulation_QMEC$friction,
-                   advection_SW=simulation_QMEC$advection)
+plot_shallow_water(
+  pressure_SW = simulation_QMEC$pressure,
+  friction_SW = simulation_QMEC$friction,
+  advection_SW = simulation_QMEC$advection
+)
 }

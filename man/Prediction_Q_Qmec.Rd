@@ -9,7 +9,8 @@ Prediction_Q_Qmec(
   Model_object,
   temp_folder = file.path(tempdir(), "BaM"),
   DoParam_Unc = TRUE,
-  DoTotal_Unc = TRUE
+  DoTotal_Unc = TRUE,
+  dt = 1
 )
 }
 \arguments{

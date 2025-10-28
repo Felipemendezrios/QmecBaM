@@ -21,7 +21,7 @@ Lower_Seine_Rouen
 }
 \description{
 A data frame containing information about the stage record in meters,
-referenced to the zero of the stage gauge from 28/09/2015 until 01/10/2015
+referenced to the Marine elevation of Le Havre from 28/09/2015 until 01/10/2015
 provided by Stéphane Piney (SPC DREAL Normandy).
 Additionally, information on ADCP discharge measurements is available
 from the gauging campaign conducted on 29/09/2015S

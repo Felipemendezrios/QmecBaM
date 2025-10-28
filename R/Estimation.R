@@ -187,11 +187,6 @@ Estimation_Qmec <- function(CalibrationData,
   mcmc_temp <- RBaM::mcmcOptions(nCycles = nCycles)
   cook_temp <- RBaM::mcmcCooking(burn = burn, nSlim = nSlim)
 
-  # Export temporal grid in temporal folder
-  write.table(CalibrationData[, Nb_column_time_CalData],
-    file = file.path(temp_folder, "temporal_grid.txt"),
-    col.names = TRUE
-  )
   # Run BaM executable
   RBaM::BaM(
     mod = Model_object,
@@ -208,6 +203,12 @@ Estimation_Qmec <- function(CalibrationData,
       DIC.fname = "Results_DIC.txt",
       xtendedMCMC.fname = "Results_extended.txt"
     )
+  )
+
+  # Export temporal grid in temporal folder
+  write.table(CalibrationData[, Nb_column_time_CalData],
+    file = file.path(temp_folder, "temporal_grid.txt"),
+    col.names = TRUE
   )
 
   # Analyse results
@@ -308,7 +309,7 @@ Prediction_Q_Qmec <- function(CalibrationData,
                               temp_folder = file.path(tempdir(), "BaM"),
                               DoParam_Unc = TRUE,
                               DoTotal_Unc = TRUE,
-                              dt = 60) {
+                              dt = 1) {
   set.seed(2024)
   CalData_object <- RBaM::dataset(
     X = CalibrationData[c("h1", "h2")],
